@@ -1,3 +1,4 @@
 ---
 - role: andrewrothstein.dnsmasq_configure
+  version: v1.0.0
 
