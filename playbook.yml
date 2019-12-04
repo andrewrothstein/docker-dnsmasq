@@ -1,6 +1,6 @@
 ---
 - hosts: localhost
-  variables:
+  vars:
     domain: drewfus.org
     matchbox_port: 8080
     dhcp_hosts:
