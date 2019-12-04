@@ -5,5 +5,5 @@
   --snippet from.j2 ansible-playbook.j2 cmd.j2
   --upstreamgroup andrewrothstein
   --upstreamapp docker-dumb-init
-  --writeall --buidlall --pushall
+  --writeall --buildall --pushall
   --alltags ${OS}

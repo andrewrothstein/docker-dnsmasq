@@ -39,7 +39,7 @@ language: python
 python: '3.7'
 script:
 - dcb --snippetsdir . --snippet from.j2 ansible-playbook.j2 cmd.j2 --upstreamgroup
-  andrewrothstein --upstreamapp docker-dumb-init --writeall --buidlall --pushall --alltags
+  andrewrothstein --upstreamapp docker-dumb-init --writeall --buildall --pushall --alltags
   ${OS}
 services:
 - docker
