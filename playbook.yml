@@ -1,0 +1,50 @@
+---
+- hosts: localhost
+  variables:
+    domain: drewfus.org
+    matchbox_port: 8080
+    dhcp_hosts:
+      - mac: '85:51:fb:46:d9:6f'
+        ip: '172.16.0.2'
+      - mac: '78:f2:9e:90:47:9b'
+        ip: '172.16.0.3'
+      - mac: '78:f2:9e:90:47:99'
+        ip: '172.16.0.4'
+  roles:
+    - role: andrewrothstein.dnsmasq_configure
+      dnsmasq_activate: False
+      dnsmasq_configure_interfaces:
+        - eth0
+      dnsmasq_configure_addresses:
+        matchbox.{{ domain }}: '172.16.0.1'
+      dnsmasq_configure_listen_addresses:
+        - '172.16.0.1'
+        - '127.0.0.1'
+        - '[::1]'
+      dnsmasq_configure_dhcp_userclasses:
+        - set: ipxe
+          includes: iPXE
+      dnsmasq_configure_dhcp_boots:
+        - tag: ipxe
+          file: http://matchbox.{{ domain }}:{{ matchbox_port }}/boot.ipxe
+        - tag:
+            - efi64
+            - #ipxe
+          file: ipxe.efi
+        - tags:
+            - bios
+            - #ipxe
+          file: undionly.kpxe
+      dnsmasq_configure_dhcp_matches:
+        - set: efi64
+          opt: 60
+          val: PXEClient:Arch:00007
+        - set: efi64
+          opt: 60
+          val: PXEClient:Arch:00009
+        - set: bios
+          opt: 60
+          val: PXEClient:Arch:00000
+      dnsmasq_configure_dhcp_hosts: '{{ dhcp_hosts }}'
+      dnsmasq_configure_log_dhcp: True
+
